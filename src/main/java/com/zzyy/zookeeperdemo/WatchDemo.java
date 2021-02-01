@@ -1,4 +1,4 @@
-package zookeeper.demo;
+package com.zzyy.zookeeperdemo;
 
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.*;
@@ -11,7 +11,7 @@ import org.apache.zookeeper.data.Stat;
  */
 public class WatchDemo implements Watcher {
 
-    private static Logger logger = Logger.getLogger(App.class);
+    private static Logger logger = Logger.getLogger(WatchDemo.class);
     static ZooKeeper zooKeeper;
 
     static {

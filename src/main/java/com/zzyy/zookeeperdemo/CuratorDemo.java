@@ -1,4 +1,4 @@
-package zookeeper.demo;
+package com.zzyy.zookeeperdemo;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -17,13 +17,13 @@ public class CuratorDemo {
                 .builder()
                 .connectString("127.0.0.1:2181")
                 .sessionTimeoutMs(4000)
-                .retryPolicy(new ExponentialBackoffRetry(1000,3))
+                .retryPolicy(new ExponentialBackoffRetry(1000, 3))
                 .namespace("")
                 .build();
 
         curatorFramework.start();
 
-        Stat stat=new Stat();
+        Stat stat = new Stat();
         byte[] bytes = curatorFramework.getData().storingStatIn(stat).forPath("/zzyy");
         System.out.println(new String(bytes));
 

@@ -1,4 +1,4 @@
-package zookeeper.demo;
+package com.zzyy.zookeeperdemo;
 
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.*;
