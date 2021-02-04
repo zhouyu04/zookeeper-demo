@@ -284,4 +284,54 @@ public class RedisUtils {
     public Object rightPop(String key) {
         return redisTemplate.opsForList().rightPop(key);
     }
+
+
+    //----------------------Hash-----------------------------
+
+    /**
+     * 功能描述: 设置hash值
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/4 17:42
+     */
+    public void put(String key, Object hk, Object value) {
+        redisTemplate.opsForHash().put(key, hk, value);
+    }
+
+    /**
+     * 功能描述: 返回hash的值
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/4 17:46
+     */
+    public Object get(String key, Object hk) {
+        return redisTemplate.opsForHash().get(key, hk);
+    }
+
+
+    /**
+     * 功能描述: 判断hsah是否存在
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/4 17:48
+     */
+    public boolean hasKey(String key, Object hk) {
+        return redisTemplate.opsForHash().hasKey(key, hk);
+    }
+
+    /**
+     * 功能描述: 删除hash
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/4 17:57
+     */
+    public Object deleteHash(String key, Object hk) {
+        return redisTemplate.opsForHash().delete(key, hk);
+    }
+
+
+
+
+
+
 }

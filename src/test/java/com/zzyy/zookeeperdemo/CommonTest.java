@@ -76,8 +76,27 @@ public class CommonTest {
     @Test
     public void testList() {
 
-        long zyStr = redisUtils.listSize("zyStr");
-        System.out.println(zyStr);
+
+        long lzy = redisUtils.listSize("lzy");
+        System.out.println("列表长度:" + lzy);
+
+        redisUtils.leftPush("lzy", "000");
+        redisUtils.leftPushAll("lzy", new String[]{"222", "333"});
+
+        redisUtils.rightPush("lzy", "999");
+        redisUtils.rightPushAll("lzy", new String[]{"888", "777"});
+
+        redisUtils.listSet("lzy", "555", 5);
+
+        Object lzy1 = redisUtils.getIndex("lzy", 5);
+        System.out.println(lzy1);
+
+        Object o = redisUtils.leftPop("lzy");
+        System.out.println(o);
+        Object o1 = redisUtils.rightPop("lzy");
+        System.out.println(o1);
+
+        redisUtils.remove("lzy", "555", 0);
 
     }
 
