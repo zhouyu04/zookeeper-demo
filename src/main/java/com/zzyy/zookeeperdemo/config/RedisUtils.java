@@ -472,5 +472,7 @@ public class RedisUtils {
         return redisTemplate.opsForSet().scan(key, ops);
     }
 
+    //--------------------------ZSET数据类型-----------------------------------
+
 
 }
