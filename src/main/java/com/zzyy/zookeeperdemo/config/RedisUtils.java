@@ -395,4 +395,82 @@ public class RedisUtils {
         return redisTemplate.opsForHash().size(hk);
     }
 
+
+    //----------------------------SET数据结构----------------------------------------------
+
+    /**
+     * 功能描述: 无序集合中添加元素，返回添加个数
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 15:17
+     */
+    public long add(String key, String... values) {
+        return redisTemplate.opsForSet().add(key, values);
+    }
+
+    /**
+     * 功能描述: 无序集合中删除元素，返回添加个数
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 15:33
+     */
+    public long remove(String key, String... values) {
+        return redisTemplate.opsForSet().remove(key, values);
+    }
+
+
+    /**
+     * 功能描述:移除并返回集合中的一个随机元素
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 15:58
+     */
+    public Object pop(String key) {
+        return redisTemplate.opsForSet().pop(key);
+    }
+
+    /**
+     * 功能描述: 将 value 元素从 source 集合移动到 destination 集合
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 16:01
+     */
+    public boolean move(String source, Object value, String destination) {
+        return redisTemplate.opsForSet().move(source, value, destination);
+    }
+
+
+    /**
+     * 功能描述: 无序集合的大小长度
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 16:02
+     */
+    public long setSize(String key) {
+        return redisTemplate.opsForSet().size(key);
+    }
+
+
+    /**
+     * 功能描述: 返回集合中的所有成员
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 16:03
+     */
+    public Set<Object> members(String key) {
+        return redisTemplate.opsForSet().members(key);
+    }
+
+
+    /**
+     * 功能描述: 遍历set
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 16:04
+     */
+    public Cursor<Object> setScan(String key, ScanOptions ops) {
+        return redisTemplate.opsForSet().scan(key, ops);
+    }
+
+
 }

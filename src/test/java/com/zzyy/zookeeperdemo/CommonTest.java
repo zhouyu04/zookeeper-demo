@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Duration;
@@ -147,6 +148,39 @@ public class CommonTest {
 
         long zhash4 = redisUtils.hashSize("zhash");
         System.out.println(zhash4);
+
+    }
+
+
+    @Test
+    public void testSet() {
+
+        redisUtils.add("zySet", "123", "456","000");
+        redisUtils.add("zzyySet", "aaa", "bbb");
+
+        redisUtils.remove("zySet", "123");
+
+
+        redisUtils.add("zySet", "789");
+
+        Object zySet = redisUtils.pop("zySet");
+        System.out.println("获取值:" + zySet);
+
+        boolean move = redisUtils.move("zySet", "789", "zzyySet");
+        System.out.println(move);
+
+
+        long zySet1 = redisUtils.setSize("zySet");
+        System.out.println(zySet1);
+
+        Set<Object> zySet2 = redisUtils.members("zySet");
+        System.out.println(zySet2);
+
+
+        Cursor<Object> zySet3 = redisUtils.setScan("zzyySet", ScanOptions.NONE);
+        while (zySet3.hasNext()) {
+            System.out.println(zySet3.next());
+        }
 
     }
 
