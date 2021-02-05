@@ -1,14 +1,20 @@
 package com.zzyy.zookeeperdemo;
 
 import com.zzyy.zookeeperdemo.config.RedisUtils;
+import com.zzyy.zookeeperdemo.utils.User;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @Auther: zhouyu
@@ -99,5 +105,50 @@ public class CommonTest {
         redisUtils.remove("lzy", "555", 0);
 
     }
+
+
+    @Test
+    public void testHash() {
+
+        redisUtils.put("zyhash", "name", "周渔");
+
+        Object o = redisUtils.get("zyhash", "name");
+        System.out.println("获取name:" + o);
+
+        boolean b = redisUtils.hasKey("zyhash", "name");
+        System.out.println("是否存在:" + b);
+
+        redisUtils.deleteHash("zyhash", "name");
+
+        boolean b2 = redisUtils.hasKey("zhash", "name");
+        System.out.println("是否存在b2:" + b2);
+
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "周渔");
+        map.put("age", "123");
+        map.put("user", new User().toString());
+
+        redisUtils.putAll("zhash", map);
+
+        Set<Object> zhash = redisUtils.keys("zhash");
+        System.out.println(zhash);
+        List<Object> zhash1 = redisUtils.values("zhash");
+        System.out.println(zhash1);
+        Map<String, Object> zhash2 = redisUtils.entries("zhash");
+        System.out.println(zhash2);
+//
+        Cursor<Map.Entry<String, Object>> zhash3 = redisUtils.scan("zhash");
+
+        while (zhash3.hasNext()) {
+            Map.Entry<String, Object> next = zhash3.next();
+            System.out.println(next.getKey() + ":" + next.getValue());
+        }
+
+        long zhash4 = redisUtils.hashSize("zhash");
+        System.out.println(zhash4);
+
+    }
+
 
 }

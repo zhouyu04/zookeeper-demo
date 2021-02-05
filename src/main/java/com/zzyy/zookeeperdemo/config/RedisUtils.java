@@ -2,18 +2,22 @@ package com.zzyy.zookeeperdemo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisSystemException;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: zhouyu
  * @Date: 2021/2/4 13:57
- * @Description:
+ * @Description:https://blog.csdn.net/weixin_40461281/article/details/82011670
  */
 @Component
 public class RedisUtils {
@@ -299,6 +303,16 @@ public class RedisUtils {
     }
 
     /**
+     * 功能描述: 使用m中提供的多个散列字段设置到key对应的散列表中
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 13:45
+     */
+    public void putAll(String key, Map<String, Object> map) {
+        redisTemplate.opsForHash().putAll(key, map);
+    }
+
+    /**
      * 功能描述: 返回hash的值
      *
      * @auther: zhouyu
@@ -329,9 +343,56 @@ public class RedisUtils {
         return redisTemplate.opsForHash().delete(key, hk);
     }
 
+    /**
+     * 功能描述:获取key所对应的散列表的key
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 13:42
+     */
+    public Set<Object> keys(Object hk) {
+        return redisTemplate.opsForHash().keys(hk);
+    }
+
+    /**
+     * 功能描述: 获取整个哈希存储的值根据密钥
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 13:46
+     */
+    public List<Object> values(Object hk) {
+        return redisTemplate.opsForHash().values(hk);
+    }
 
 
+    /**
+     * 功能描述: 获取整个哈希存储根据
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 13:48
+     */
+    public Map<String, Object> entries(String key) {
+        return redisTemplate.opsForHash().entries(key);
+    }
+
+    /**
+     * 功能描述: 使用Cursor在key的hash中迭代，相当于迭代器
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 13:50
+     */
+    public Cursor<Map.Entry<String, Object>> scan(String key) {
+        return redisTemplate.opsForHash().scan(key, ScanOptions.NONE);
+    }
 
 
+    /**
+     * 功能描述:获取key所对应的散列表的大小个数
+     *
+     * @auther: zhouyu
+     * @date: 2021/2/5 13:43
+     */
+    public long hashSize(Object hk) {
+        return redisTemplate.opsForHash().size(hk);
+    }
 
 }
